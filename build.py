@@ -7,7 +7,7 @@ import os
 if __name__ == "__main__":
     script_dir = os.path.dirname(__file__)
     index_html = os.path.join(script_dir, "index.html")
-    output_html = os.path.join(script_dir, "output", "index.html")
+    output_html = os.path.join(script_dir, "docs", "index.html")
 
     doc = bs4.BeautifulSoup(open('index.html').read(), 'html.parser')
 
