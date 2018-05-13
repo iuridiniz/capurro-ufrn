@@ -196,7 +196,7 @@
       </div>
     </div>
     <hr/>
-    <div>
+    <div id="capurro-escore">
         Escore: <span id="capurro-escore-dias"></span> ou <span id="capurro-escore-semanas"></span>
     </div>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
@@ -208,11 +208,12 @@
         dots: false
       };
 
-      $('.capurro-orelha, .capurro-pele, .capurro-glandula-mamaria, .capurro-mamilos, .capurro-planta').on('afterChange', function(event, slick, currentSlide){
-        update();
+      $('.capurro-orelha, .capurro-pele, .capurro-glandula-mamaria, .capurro-mamilos, .capurro-planta').
+        on('afterChange', function(event, slick, currentSlide){
+          update();
       });
 
-      function update() {
+      function update(instantly) {
         var orelha_value = $('.capurro-orelha').find('.slick-current').find('.capurro-slide').data('value');
         var pele_value = $('.capurro-pele').find('.slick-current').find('.capurro-slide').data('value');
         var glandula_mamaria_value = $('.capurro-glandula-mamaria').find('.slick-current').find('.capurro-slide').data('value');
@@ -227,13 +228,21 @@
         var capurro = orelha_value + pele_value + glandula_mamaria_value + mamilos_value + planta_value + 204;
         var capurro_semanas = Math.floor(capurro/7);
         var capurro_dias = capurro % 7;
-        $("#capurro-escore-dias").html(capurro + " dias (&plusmn 8,4 dias)");
-        $("#capurro-escore-semanas").html(capurro_semanas + " semanas e " + capurro_dias + " dias (&plusmn; 8,4 dias)");
+
+        var do_change = function () {
+          $("#capurro-escore-dias").html(capurro + " dias (&plusmn 8,4 dias)");
+          $("#capurro-escore-semanas").html(capurro_semanas + " semanas e " + capurro_dias + " dias (&plusmn; 8,4 dias)");          
+        };
+        if (instantly) {
+          do_change();
+        } else {
+          $("#capurro-escore").fadeOut(do_change).fadeIn();
+        }
       }
 
       $(document).ready(function(){
         $('.capurro-orelha, .capurro-pele, .capurro-glandula-mamaria, .capurro-mamilos, .capurro-planta').slick(slick_options);
-        update();
+        update(true);
       });
     </script>  
     
